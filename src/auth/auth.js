@@ -7,17 +7,15 @@ import {
     OAUTH_GRANT_PASSWORD,
     OAUTH_GRANT_EXTERNAL
 } from "../constants";
+import Token from "./token";
 
 export default function auth(): Object {
     return {
         applicationAuthentication: () => {
-            return this.request(OAUTH_TOKEN_URL, {
-                method: "GET",
-                query: {
-                    client_id: this._clientId,
-                    client_secret: this._clientSecret,
-                    grant_type: OAUTH_GRANT_CLIENT_CREDENTIALS
-                }
+            return this.auth._requestToken({
+                client_id: this._clientId,
+                client_secret: this._clientSecret,
+                grant_type: OAUTH_GRANT_CLIENT_CREDENTIALS
             });
         },
 
@@ -50,26 +48,52 @@ export default function auth(): Object {
                 throw Error("You must specify (email, password) OR (token, service).");
             }
 
-            return this.request(OAUTH_TOKEN_URL, {
-                method: "GET",
-                query: query
-            });
+            return this.auth._requestToken(query);
         },
 
         refreshAuthentication: (refreshToken) => {
+            return this.auth._requestToken({
+                client_id: this._clientId,
+                client_secret: this._clientSecret,
+                grant_type: OAUTH_GRANT_REFRESH_TOKEN,
+                refresh_token: refreshToken
+            });
+        },
+
+        _requestToken: (query: Object) => {
             return this.request(OAUTH_TOKEN_URL, {
                 method: "GET",
-                query: {
-                    client_id: this._clientId,
-                    client_secret: this._clientSecret,
-                    grant_type: OAUTH_GRANT_REFRESH_TOKEN,
-                    refresh_token: refreshToken
+                query: query,
+                auth: false
+            }).then(response => {
+                if (response.status === 200) {
+                    return response.json();
                 }
+
+                throw Error("Authentication fail!");
+            }).then(json => {
+                const expiredAt = new Date();
+                expiredAt.setSeconds(expiredAt.getSeconds() + json.expires_in);
+                const token = new Token({
+                    accessToken: json.access_token,
+                    refreshToken: json.refresh_token || null,
+                    expiredAt: expiredAt,
+                });
+
+                this.auth.setToken(token);
+
+                return token;
             });
         },
 
         isAuthenticated: () => {
             return this._token && !this._token.isExpired();
+        },
+
+        setToken: (token: Token) => {
+            if (token) {
+                this._token = token;
+            }
         }
     };
 }

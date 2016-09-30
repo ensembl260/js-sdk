@@ -38,11 +38,12 @@ export default class MRClient {
         requestOptions: {
             method: string,
             query: Object,
-            headers: Object,
             body: Object,
             auth?: boolean
         }
     ):Promise<any> {
+        let { method, query, body } = requestOptions;
+        let headers = {};
         const auth = requestOptions.auth || true;
         const token = this._token;
 
@@ -56,17 +57,27 @@ export default class MRClient {
                         // TODO
                     });
             }
-            requestOptions.headers["Authorization"] = `Bearer ${token.accessToken}`;
+            headers["Authorization"] = `Bearer ${token.accessToken}`;
         }
 
-        if (requestOptions.body) {
-            requestOptions.headers["Content-Type"] = "application/x-www-form-urlencoded";
+        if (body) {
+            headers["Content-Type"] = "application/json";
+
+            body = JSON.stringify({
+                data: body
+            });
         }
 
-        if (requestOptions.query) {
-            url = decodeURIComponent(`${url}?${qsStringify(requestOptions.query)}`);
+        if (query) {
+            url = decodeURIComponent(`${url}?${qsStringify(query)}`);
         }
 
-        return fetch(url, requestOptions);
+        return fetch(`${this._apiUrl}${url}`, {
+            method,
+            headers,
+            body: (method !== "GET") && body
+                ? JSON.stringify(body)
+                : undefined
+        });
     }
 }

@@ -3,8 +3,8 @@ import Token from "../src/auth/token";
 
 import expect, { spyOn, restoreSpies } from "expect";
 
-const clientId = "client_id";
-const clientSecret = "client_secret";
+const clientId = "c4ee8504-80d2-11e6-8f1f-9be34f73e493_4g8j1az05u2o8gog4c8k0kksk800ws84ks0o48k88gosg4wg0k";
+const clientSecret = "4fd07cend9c084w0owk844wc4o4okwwoogg8s4k0ksocwos08k";
 
 describe("MRClient", () => {
 
@@ -57,6 +57,74 @@ describe("MRClient", () => {
             });
 
             expect(mrClient._token).toBe(token);
+        });
+    });
+
+    describe("auth", () => {
+        const mrClient = new MRClient({
+            clientId: clientId,
+            clientSecret: clientSecret,
+        });
+
+        it("should set the token on the auth of MRClient instance", () => {
+            const token = new Token({
+                accessToken: "access_token",
+                expiredAt: new Date()
+            });
+
+            mrClient.auth.setToken(token);
+
+            expect(mrClient._token).toBe(token);
+        });
+
+        it("should set a new token as an app", (done) => {
+            mrClient.auth.applicationAuthentication()
+                .then(token => {
+                    expect(token).toBeAn(Token);
+                    expect(token.accessToken).toExist();
+                    expect(token.isExpired()).toBe(false);
+                    expect(mrClient.auth.isAuthenticated()).toBe(true);
+                    done();
+                });
+        });
+
+        it("should set a new token as an user", (done) => {
+            mrClient.auth.userAuthentication({
+                email: "user.a@ma-residence.fr",
+                password: "password"
+            }).then(token => {
+                expect(token).toBeAn(Token);
+                expect(token.accessToken).toExist();
+                expect(token.refreshToken).toExist();
+                expect(token.isExpired()).toBe(false);
+                expect(mrClient.auth.isAuthenticated()).toBe(true);
+                done();
+            });
+        });
+    });
+
+
+    describe("request", () => {
+        const mrClient = new MRClient({
+            clientId: clientId,
+            clientSecret: clientSecret,
+        });
+
+        it("should set a new token as an user", (done) => {
+            mrClient.auth.userAuthentication({
+                email: "user.a@ma-residence.fr",
+                password: "password"
+            }).then(() => {
+                expect(mrClient.auth.isAuthenticated()).toBe(true);
+
+                mrClient.request("/me", {
+                    method: "GET"
+                }).then(response => {
+                    expect(response.status).toBe(200);
+                });
+
+                done();
+            });
         });
     });
 });

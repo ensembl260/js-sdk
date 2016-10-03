@@ -67,14 +67,12 @@ describe("MRClient", () => {
         });
 
         it("should set the token on the auth of MRClient instance", () => {
-            const token = new Token({
+            mrClient.auth.setToken({
                 accessToken: "access_token",
                 expiredAt: new Date()
             });
 
-            mrClient.auth.setToken(token);
-
-            expect(mrClient._token).toBe(token);
+            expect(mrClient._token).toBeAn(Token);
         });
 
         it("should set a new token as an app", (done) => {

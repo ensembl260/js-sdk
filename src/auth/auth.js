@@ -90,12 +90,20 @@ export default function auth(): Object {
             return this._token && !this._token.isExpired();
         },
 
+        logout: () => {
+            this._token = null;
+        },
+
         setToken: (token: {
-            accessToken: String,
+            accessToken: string,
             expiredAt: Date,
-            refreshToken?: String
+            refreshToken?: string
         }) => {
-            this._token = new Token(token);
+            this._token = new Token({
+                accessToken: token.accessToken,
+                expiredAt: token.expiredAt,
+                refreshToken: token.refreshToken
+            });
 
             return this._token;
         }

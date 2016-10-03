@@ -6,3 +6,11 @@ var mrClient = new MRClient.default({
 });
 
 console.log(mrClient);
+
+var token = mrClient.auth.setToken({
+    accessToken: "klfgkdj",
+    expiredAt: new Date(),
+    refreshToken: "fdmllkf"
+});
+
+console.log(token);

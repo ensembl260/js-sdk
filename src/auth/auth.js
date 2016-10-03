@@ -90,10 +90,14 @@ export default function auth(): Object {
             return this._token && !this._token.isExpired();
         },
 
-        setToken: (token: Token) => {
-            if (token) {
-                this._token = token;
-            }
+        setToken: (token: {
+            accessToken: String,
+            expiredAt: Date,
+            refreshToken?: String
+        }) => {
+            this._token = new Token(token);
+
+            return this._token;
         }
     };
 }

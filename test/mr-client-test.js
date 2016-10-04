@@ -99,6 +99,19 @@ describe("MRClient", () => {
                 done();
             });
         });
+
+        it("should unset the token in the MRClient instance", () => {
+            mrClient.auth.setToken({
+                accessToken: "access_token",
+                expiredAt: new Date()
+            });
+
+            expect(mrClient._token).toBeAn(Token);
+
+            mrClient.auth.logout();
+
+            expect(mrClient._token).toBe(null);
+        });
     });
 
 

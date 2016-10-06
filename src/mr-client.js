@@ -82,9 +82,7 @@ export default class MRClient {
         return fetch(`${this._apiUrl}${url}`, {
             method,
             headers,
-            body: (method !== "GET") && body
-                ? JSON.stringify(body)
-                : undefined
+            body: (method !== "GET") && body ? body : undefined
         });
     }
 }

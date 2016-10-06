@@ -46,17 +46,17 @@ describe("MRClient", () => {
         });
 
         it("should set the token argument on the auth of MRClient instance", () => {
-            const token = new Token({
-                accessToken: "access_token",
-                expiredAt: new Date()
-            });
             const mrClient = new MRClient({
                 clientId: clientId,
                 clientSecret: clientSecret,
-                token: token
+                token: {
+                    accessToken: "access_token",
+                    expiredAt: new Date()
+                }
             });
 
-            expect(mrClient._token).toBe(token);
+            expect(mrClient._token).toBeAn(Token);
+            expect(mrClient._token.accessToken).toBe("access_token");
         });
     });
 

@@ -1,15 +1,15 @@
 # js-sdk
 
-WIP
+A SDK for ma-residence API in Javascript.
 
 # Installation
 
-Update your package.json:
+Update your bower.json:
 
 ```json
 {
     "dependencies": {
-        "private-repo": "git+https://github.com/ma-residence/js-sdk.git"
+        "mr-js-sdk": "git@github.com:ma-residence/js-sdk.git"
     }
 }
 ```
@@ -19,12 +19,10 @@ Update your package.json:
 To create an instance, simply provide an Object with your clientId, clientSecret and the API host:
 
 ```js
-import MRClient from "mr-js-sdk";
-
 const clientId = "MY_CLIENT_ID";
 const clientSecret = "MY_CLIENT_SECRET";
 
-const client = new MRClient({
+const client = new MRClient.default({
     clientId: clientId,
     clientSecret: clientSecret
 });
@@ -32,28 +30,24 @@ const client = new MRClient({
 
 ***NOTE:*** You can override the host URL if you need with `ApiUrl` argument.
 
-If have you have already an access token, like this one:
-
+If have you have already an access token, you can defined directly in the constructor:
 ```js
-import Token from "mr-js-sdk/auth/Token";
-
-const token = new Token({
-    accessToken: myToken,        // string
-    expiredAt: myExpirationDate, // Date
-    refreshToken: myRefreshToken // string, optional
-});
-```
-
-You can defined directly in the constructor:
-```js
-const client = new MRClient({
+const client = new MRClient.default({
     // ...
-    token: token
+    token: {
+        accessToken: myToken,        // string
+        expiredAt: myExpirationDate, // Date
+        refreshToken: myRefreshToken // string, optional
+    }
 });
 ```
 Or by a setter:
 ```js
-client.auth.setToken(token);
+client.auth.setToken({
+    accessToken: myToken,        // string
+    expiredAt: myExpirationDate, // Date
+    refreshToken: myRefreshToken // string, optional
+});
 ```
 
 ## Authentication
@@ -92,7 +86,9 @@ client.request("/foo", {
     query: {
         foo: "foo"
     },
-    body: "some_data",
+    body: {
+        foo: "foo"
+    },
 }).then(res => {
     // do your stuff
 }).catch(err => {
@@ -100,4 +96,4 @@ client.request("/foo", {
 });
 ```
 
-Check to documentation to see what are available routes.
+Check API documentation to see all available routes.

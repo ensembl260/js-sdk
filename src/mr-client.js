@@ -22,15 +22,22 @@ export default class MRClient {
             apiUrl: string,
             clientId: string,
             clientSecret: string,
-            token?: Token
+            token?: {
+                accessToken: string,
+                expiredAt: Date,
+                refreshToken?: string
+            }
         }
     ) {
         this._apiUrl = options.apiUrl || API_URL;
         this._clientId = options.clientId;
         this._clientSecret = options.clientSecret;
-        this._token = options.token;
 
         this.auth = auth.bind(this)();
+
+        if (options.token) {
+            this.auth.setToken(options.token);
+        }
     }
 
     request(
@@ -54,7 +61,7 @@ export default class MRClient {
                         return this.request(url, requestOptions);
                     })
                     .catch(() => {
-                        // TODO
+                        throw new Error("Authentication error!");
                     });
             }
             headers["Authorization"] = `Bearer ${token.accessToken}`;

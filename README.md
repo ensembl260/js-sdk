@@ -89,10 +89,14 @@ client.request("/foo", {
     body: {
         foo: "foo"
     },
-}).then(res => {
-    // do your stuff
-}).catch(err => {
-    // handle error
+}).then(function(response) {
+    // Here you can check the response status, etc.
+    // And we return the deserialize content
+    return response.json();
+}).then(function(payload) {
+    // A payload object contains the data, errors and metadata    
+}).catch(function(err) {
+    // catch error exception during the promise
 });
 ```
 

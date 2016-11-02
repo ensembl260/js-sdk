@@ -4,7 +4,7 @@ import Token from "../src/auth/token";
 import expect, { spyOn, restoreSpies } from "expect";
 
 const clientId = global.client_id;
-const clientSecret =  global.client_secret;
+const clientSecret = global.client_secret;
 
 describe("MRClient", () => {
 
@@ -132,9 +132,9 @@ describe("MRClient", () => {
                     method: "GET"
                 }).then(response => {
                     expect(response.status).toBe(200);
-                });
 
-                done();
+                    done();
+                });
             });
         });
     });

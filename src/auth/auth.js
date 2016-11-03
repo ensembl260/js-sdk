@@ -83,6 +83,8 @@ export default function auth(): Object {
                 this.auth.setToken(token);
 
                 return token;
+            }).catch(() => {
+                throw new Error("Authentication error!");
             });
         },
 

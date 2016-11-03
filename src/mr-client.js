@@ -56,14 +56,12 @@ export default class MRClient {
 
         if (auth && token) {
             if (token.isExpired() && token.refreshToken) {
-                this.auth.refreshAuthentication(token.refreshToken)
+                return this.auth.refreshAuthentication(token.refreshToken)
                     .then(() => {
                         return this.request(url, requestOptions);
-                    })
-                    .catch(() => {
-                        throw new Error("Authentication error!");
                     });
             }
+
             headers["Authorization"] = `Bearer ${token.accessToken}`;
         }
 

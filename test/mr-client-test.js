@@ -100,6 +100,15 @@ describe("MRClient", () => {
             });
         });
 
+        it("should have the token in the MRClient instance", () => {
+            mrClient.auth.setToken({
+                accessToken: "access_token",
+                expiredAt: new Date()
+            });
+
+            expect(mrClient.auth.getToken()).toBeAn(Token);
+        });
+
         it("should unset the token in the MRClient instance", () => {
             mrClient.auth.setToken({
                 accessToken: "access_token",

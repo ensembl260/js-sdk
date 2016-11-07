@@ -108,6 +108,10 @@ export default function auth(): Object {
             });
 
             return this._token;
+        },
+
+        getToken: () => {
+            return this._token;
         }
     };
 }

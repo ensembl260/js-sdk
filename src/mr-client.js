@@ -2,8 +2,12 @@
 
 declare var fetch: any;
 
-import { API_URL } from "./constants";
+import {
+    API_URL,
+    EVENT_PRE_REQUEST
+} from "./constants";
 import auth from "./auth/auth";
+import event from "./event";
 import Token from "./auth/token";
 import { stringify as qsStringify } from "querystring";
 
@@ -16,6 +20,7 @@ export default class MRClient {
     _token: ?Token;
 
     auth: Object;
+    event: Object;
 
     constructor(
         options: {
@@ -34,6 +39,8 @@ export default class MRClient {
         this._clientSecret = options.clientSecret;
 
         this.auth = auth.bind(this)();
+        this.event = event.bind(this)();
+        this.event.listeners = new Map();
 
         if (options.token) {
             this.auth.setToken(options.token);
@@ -53,6 +60,8 @@ export default class MRClient {
         let headers = {};
         const auth = requestOptions.auth || true;
         const token = this._token;
+
+        this.event.emit(EVENT_PRE_REQUEST, this);
 
         if (auth && token) {
             if (token.isExpired() && token.refreshToken) {

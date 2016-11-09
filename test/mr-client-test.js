@@ -1,4 +1,5 @@
 import MRClient from "../src/mr-client";
+import { EVENT_PRE_AUTH } from "../src/constants";
 import Token from "../src/auth/token";
 
 import expect, { spyOn, restoreSpies } from "expect";
@@ -123,7 +124,6 @@ describe("MRClient", () => {
         });
     });
 
-
     describe("request", () => {
         const mrClient = new MRClient({
             clientId: clientId,
@@ -145,6 +145,29 @@ describe("MRClient", () => {
                     done();
                 });
             });
+        });
+    });
+
+    describe("event", () => {
+        const mrClient = new MRClient({
+            clientId: clientId,
+            clientSecret: clientSecret,
+        });
+
+        it("should add and remove a listener", () => {
+            let listener = function () {};
+
+            mrClient.event.addListener(EVENT_PRE_AUTH, listener);
+            expect(mrClient.event.removeListener(EVENT_PRE_AUTH, listener)).toBe(true);
+        });
+
+        it("should triggered an event", (done) => {
+            let listener = function () {
+                done();
+            };
+
+            mrClient.event.addListener(EVENT_PRE_AUTH, listener);
+            mrClient.event.emit(EVENT_PRE_AUTH);
         });
     });
 });

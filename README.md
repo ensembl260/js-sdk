@@ -100,4 +100,23 @@ client.request("/foo", {
 });
 ```
 
-Check API documentation to see all available routes.
+Check [API documentation](http://doc.ma-residence.fr) to see all available routes.
+
+## Event listener
+
+The client triggered several events so you can register some callbacks to them:
+
+```js
+client.event.addListener(MRClient.default.EVENT_PRE_REQUEST, function (client) {
+    // Do your stuff
+});
+```
+
+Available events:
+
+|              Constant              |    Event    |
+|                 ---                |     ---     |
+| MRClient.default.EVENT_PRE_REQUEST | pre_request |
+| MRClient.default.EVENT_PRE_AUTH    |  pre_auth   |
+| MRClient.default.EVENT_POST_AUTH   |  post_auth  |
+| MRClient.default.EVENT_FAIL_AUTH   |  fail_auth  |

@@ -5,7 +5,10 @@ import {
     OAUTH_GRANT_CLIENT_CREDENTIALS,
     OAUTH_GRANT_REFRESH_TOKEN,
     OAUTH_GRANT_PASSWORD,
-    OAUTH_GRANT_EXTERNAL
+    OAUTH_GRANT_EXTERNAL,
+    EVENT_PRE_AUTH,
+    EVENT_POST_AUTH,
+    EVENT_FAIL_AUTH
 } from "../constants";
 import Token from "./token";
 
@@ -61,6 +64,8 @@ export default function auth(): Object {
         },
 
         _requestToken: (query: Object) => {
+            this.event.emit(EVENT_PRE_AUTH, this);
+
             return this.request(OAUTH_TOKEN_URL, {
                 method: "GET",
                 query: query,
@@ -81,10 +86,11 @@ export default function auth(): Object {
                 });
 
                 this.auth.setToken(token);
+                this.event.emit(EVENT_POST_AUTH, this);
 
                 return token;
             }).catch(() => {
-                throw new Error("Authentication error!");
+                this.event.emit(EVENT_FAIL_AUTH, this);
             });
         },
 

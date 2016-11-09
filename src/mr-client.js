@@ -56,12 +56,12 @@ export default class MRClient {
             auth?: boolean
         }
     ):Promise<any> {
+        this.event.emit(EVENT_PRE_REQUEST, this);
+
         let { method, query, body } = requestOptions;
         let headers = {};
         const auth = requestOptions.auth || true;
         const token = this._token;
-
-        this.event.emit(EVENT_PRE_REQUEST, this);
 
         if (auth && token) {
             if (token.isExpired() && token.refreshToken) {

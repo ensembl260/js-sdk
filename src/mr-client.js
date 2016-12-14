@@ -60,7 +60,7 @@ export default class MRClient {
 
         let { method, query, body } = requestOptions;
         let headers = {};
-        const auth = requestOptions.auth || true;
+        const auth = (requestOptions.auth === undefined) ? true : requestOptions.auth;
         const token = this._token;
 
         if (auth && token) {

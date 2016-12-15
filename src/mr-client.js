@@ -92,4 +92,39 @@ export default class MRClient {
             body: (method !== "GET") && body ? body : undefined
         });
     }
+
+    upload(url: string, file: Blob):Promise<any> {
+        this.event.emit(EVENT_PRE_REQUEST, this);
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = e => resolve(e.target.result);
+            reader.onerror = e => reject(e.target.result);
+
+            reader.readAsBinaryString(file);
+        }).then(content => {
+            let headers = {};
+            const token = this._token;
+
+            if (token) {
+                if (token.isExpired() && token.refreshToken) {
+                    return this.auth.refreshAuthentication(token.refreshToken)
+                        .then(() => {
+                            return this.upload(url, file);
+                        });
+                }
+
+                headers["Authorization"] = `Bearer ${token.accessToken}`;
+            }
+
+            headers["Content-Type"] = file.type;
+
+            return fetch(`${this._apiUrl}${url}`, {
+                method: "POST",
+                headers: headers,
+                body: btoa(content)
+            });
+        });
+    }
 }

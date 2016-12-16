@@ -94,8 +94,6 @@ export default class MRClient {
     }
 
     upload(url: string, file: Blob):Promise<any> {
-        this.event.emit(EVENT_PRE_REQUEST, this);
-
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
 
@@ -104,26 +102,9 @@ export default class MRClient {
 
             reader.readAsBinaryString(file);
         }).then(content => {
-            let headers = {};
-            const token = this._token;
-
-            if (token) {
-                if (token.isExpired() && token.refreshToken) {
-                    return this.auth.refreshAuthentication(token.refreshToken)
-                        .then(() => {
-                            return this.upload(url, file);
-                        });
-                }
-
-                headers["Authorization"] = `Bearer ${token.accessToken}`;
-            }
-
-            headers["Content-Type"] = file.type;
-
-            return fetch(`${this._apiUrl}${url}`, {
+            return this.request(url, {
                 method: "POST",
-                headers: headers,
-                body: btoa(content)
+                body: btoa(content),
             });
         });
     }

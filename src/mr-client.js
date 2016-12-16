@@ -104,7 +104,9 @@ export default class MRClient {
         }).then(content => {
             return this.request(url, {
                 method: "POST",
-                body: btoa(content),
+                body: {
+                    file: btoa(content)
+                },
             });
         });
     }

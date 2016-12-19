@@ -53,14 +53,16 @@ export default class MRClient {
             method: string,
             query?: Object,
             body?: Object,
-            auth?: boolean
+            auth?: boolean,
+            json?: boolean
         }
     ):Promise<any> {
         this.event.emit(EVENT_PRE_REQUEST, this);
 
         let { method, query, body } = requestOptions;
-        let headers = {};
+        let headers = new Headers();
         const auth = (requestOptions.auth === undefined) ? true : requestOptions.auth;
+        const json = (requestOptions.json === undefined) ? true : requestOptions.json;
         const token = this._token;
 
         if (auth && token) {
@@ -71,15 +73,21 @@ export default class MRClient {
                     });
             }
 
-            headers["Authorization"] = `Bearer ${token.accessToken}`;
+            headers.append("Authorization", `Bearer ${token.accessToken}`);
         }
 
         if (body) {
-            headers["Content-Type"] = "application/json";
+            if (json) {
+                headers.append("Content-Type", "application/json");
 
-            body = JSON.stringify({
-                data: body
-            });
+                body = JSON.stringify({
+                    data: body
+                });
+            } else {
+                headers.append("Content-Type", "application/x-www-form-urlencoded");
+
+                body = qsStringify(body);
+            }
         }
 
         if (query) {

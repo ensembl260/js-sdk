@@ -18,8 +18,6 @@ export default class Token {
     }
 
     isExpired(): boolean {
-        const now = new Date();
-
-        return this._expiredAt < now;
+        return this._expiredAt < Date.now();
     }
 }

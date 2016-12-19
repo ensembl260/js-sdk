@@ -30,19 +30,19 @@ export default function auth(): Object {
                 service?: string,
             }
         ) => {
-            let query = {
+            let body = {
                 client_id: this._clientId,
                 client_secret: this._clientSecret
             };
 
             if (credentials.email && credentials.password) {
-                query = Object.assign({}, query, {
+                body = Object.assign({}, body, {
                     username: credentials.email,
                     password: credentials.password,
                     grant_type: OAUTH_GRANT_PASSWORD
                 });
             } else if (credentials.token && credentials.service) {
-                query = Object.assign({}, query, {
+                body = Object.assign({}, body, {
                     username: credentials.token,
                     password: credentials.service,
                     grant_type: OAUTH_GRANT_EXTERNAL
@@ -51,7 +51,7 @@ export default function auth(): Object {
                 throw Error("You must specify (email, password) OR (token, service).");
             }
 
-            return this.auth._requestToken(query);
+            return this.auth._requestToken(body);
         },
 
         refreshAuthentication: (refreshToken) => {
@@ -63,13 +63,14 @@ export default function auth(): Object {
             });
         },
 
-        _requestToken: (query: Object) => {
+        _requestToken: (body: Object) => {
             this.event.emit(EVENT_PRE_AUTH, this);
 
             return this.request(OAUTH_TOKEN_URL, {
-                method: "GET",
-                query: query,
-                auth: false
+                method: "POST",
+                body: body,
+                auth: false,
+                json: false
             }).then(response => {
                 if (response.status === 200) {
                     return response.json();

@@ -1,5 +1,7 @@
 # js-sdk
 
+[![Build Status](https://travis-ci.com/ma-residence/js-sdk.svg?token=txabW3XnmBRNYuhMQNLm&branch=master)](https://travis-ci.com/ma-residence/js-sdk)
+
 A SDK for ma-residence API in Javascript.
 
 # Installation

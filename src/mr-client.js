@@ -18,6 +18,7 @@ export default class MRClient {
     _clientSecret: string;
 
     _token: ?Token;
+    _refreshInProgress: boolean;
 
     auth: Object;
     event: Object;
@@ -37,6 +38,8 @@ export default class MRClient {
         this._apiUrl = options.apiUrl || API_URL;
         this._clientId = options.clientId;
         this._clientSecret = options.clientSecret;
+
+        this._refreshInProgress = false;
 
         this.auth = auth.bind(this)();
         this.event = event.bind(this)();
@@ -67,6 +70,11 @@ export default class MRClient {
 
         if (auth && token) {
             if (token.isExpired() && token.refreshToken) {
+                if (this._refreshInProgress) {
+                    return this.request(url, requestOptions);
+                }
+                this._refreshInProgress = true;
+
                 return this.auth.refreshAuthentication(token.refreshToken)
                     .then(() => {
                         return this.request(url, requestOptions);

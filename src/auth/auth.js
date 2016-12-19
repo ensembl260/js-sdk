@@ -60,6 +60,8 @@ export default function auth(): Object {
                 client_secret: this._clientSecret,
                 grant_type: OAUTH_GRANT_REFRESH_TOKEN,
                 refresh_token: refreshToken
+            }).then(() => {
+                this._refreshInProgress = false;
             });
         },
 
@@ -75,6 +77,8 @@ export default function auth(): Object {
                 if (response.status === 200) {
                     return response.json();
                 }
+
+                this.logout();
 
                 throw Error("Authentication fail!");
             }).then(json => {

@@ -111,6 +111,7 @@ describe("MRClient", () => {
             mrClient.request("/some/path", {
                 method: "GET"
             }).then(() => {
+                expect(mrClient._refreshRequest).toBe(null);
                 expect(mrClient.auth.getToken()).toBeAn(Token);
                 expect(mrClient.auth.getToken().accessToken).toBe("new_token");
                 expect(mrClient.auth.getToken().refreshToken).toBe("new_refresh_token");
@@ -118,6 +119,13 @@ describe("MRClient", () => {
                 expect(mrClient.auth.isAuthenticated()).toBe(true);
 
                 done();
+            });
+
+            mrClient.request("/some/path", {
+                method: "GET"
+            }).then(() => {
+                expect(mrClient._refreshRequest).toBe(null);
+                expect(mrClient.auth.getToken().isExpired()).toBe(false);
             });
         });
 

@@ -18,7 +18,7 @@ export default class MRClient {
     _clientSecret: string;
 
     _token: ?Token;
-    _refreshInProgress: boolean;
+    _refreshRequest: ?Promise<any>;
 
     auth: Object;
     event: Object;
@@ -39,7 +39,7 @@ export default class MRClient {
         this._clientId = options.clientId;
         this._clientSecret = options.clientSecret;
 
-        this._refreshInProgress = false;
+        this._refreshRequest = null;
 
         this.auth = auth.bind(this)();
         this.event = event.bind(this)();
@@ -70,15 +70,13 @@ export default class MRClient {
 
         if (auth && token) {
             if (token.isExpired() && token.refreshToken) {
-                if (this._refreshInProgress) {
-                    return this.request(url, requestOptions);
+                if (this._refreshRequest === undefined || this._refreshRequest === null) {
+                    this._refreshRequest = this.auth.refreshAuthentication(token.refreshToken);
                 }
-                this._refreshInProgress = true;
 
-                return this.auth.refreshAuthentication(token.refreshToken)
-                    .then(() => {
-                        return this.request(url, requestOptions);
-                    });
+                return this._refreshRequest.then(() => {
+                    return this.request(url, requestOptions);
+                });
             }
 
             headers.append("Authorization", `Bearer ${token.accessToken}`);

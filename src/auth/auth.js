@@ -61,7 +61,7 @@ export default function auth(): Object {
                 grant_type: OAUTH_GRANT_REFRESH_TOKEN,
                 refresh_token: refreshToken
             }).then(() => {
-                this._refreshInProgress = false;
+                this._refreshRequest = null;
             });
         },
 
@@ -78,8 +78,6 @@ export default function auth(): Object {
                     return response.json();
                 }
 
-                this.logout();
-
                 throw Error("Authentication fail!");
             }).then(json => {
                 const expiredAt = new Date();
@@ -95,6 +93,7 @@ export default function auth(): Object {
 
                 return token;
             }).catch(() => {
+                this.logout();
                 this.event.emit(EVENT_FAIL_AUTH, this);
             });
         },

@@ -47,6 +47,7 @@ api.persist()
         grant_type: "refresh_token",
         refresh_token: "N2QwZjk5ZGU4Mzc5MDg0Njk2Y2YzOGY3N2M2OTdkYzk5NDQ2NDUyZjRkNjRlMGNmNmZhNGQ5YjA3Yzg5Yjg0Yg",
     })
+    .delayConnection(200)
     .reply(200, {
         access_token: "new_token",
         expires_in: 3600,

@@ -89,7 +89,7 @@ describe("MRClient", () => {
 
         it("should set a new token as an user", (done) => {
             mrClient.auth.userAuthentication({
-                email: "user.a@ma-residence.fr",
+                email: "test@ma-residence.fr",
                 password: "password"
             }).then(token => {
                 expect(token).toBeAn(Token);
@@ -97,6 +97,26 @@ describe("MRClient", () => {
                 expect(token.refreshToken).toExist();
                 expect(token.isExpired()).toBe(false);
                 expect(mrClient.auth.isAuthenticated()).toBe(true);
+                done();
+            });
+        });
+
+        it("should refresh the token", (done) => {
+            mrClient.auth.setToken({
+                accessToken: "Y2M5OTM5NTA0N2Q4MDU5ODA1NzJiYWRkOGUxYTAyZmRjMWZmMTZlNjg0OWNkNDM1M2Q3ZmM5ZDEwOWVjZmU5Yg",
+                expiredAt: new Date(98, 1),
+                refreshToken: "N2QwZjk5ZGU4Mzc5MDg0Njk2Y2YzOGY3N2M2OTdkYzk5NDQ2NDUyZjRkNjRlMGNmNmZhNGQ5YjA3Yzg5Yjg0Yg"
+            });
+
+            mrClient.request("/some/path", {
+                method: "GET"
+            }).then(() => {
+                expect(mrClient.auth.getToken()).toBeAn(Token);
+                expect(mrClient.auth.getToken().accessToken).toBe("new_token");
+                expect(mrClient.auth.getToken().refreshToken).toBe("new_refresh_token");
+                expect(mrClient.auth.getToken().isExpired()).toBe(false);
+                expect(mrClient.auth.isAuthenticated()).toBe(true);
+
                 done();
             });
         });
@@ -132,7 +152,7 @@ describe("MRClient", () => {
 
         it("should set a new token as an user", (done) => {
             mrClient.auth.userAuthentication({
-                email: "user.a@ma-residence.fr",
+                email: "test@ma-residence.fr",
                 password: "password"
             }).then(() => {
                 expect(mrClient.auth.isAuthenticated()).toBe(true);

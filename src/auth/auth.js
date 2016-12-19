@@ -30,7 +30,7 @@ export default function auth(): Object {
                 service?: string,
             }
         ) => {
-            var query = {
+            let query = {
                 client_id: this._clientId,
                 client_secret: this._clientSecret
             };

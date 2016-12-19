@@ -51,8 +51,8 @@ export default class MRClient {
         url: string,
         requestOptions: {
             method: string,
-            query: Object,
-            body: Object,
+            query?: Object,
+            body?: Object,
             auth?: boolean
         }
     ):Promise<any> {
@@ -100,7 +100,7 @@ export default class MRClient {
             reader.onload = e => resolve(e.target.result);
             reader.onerror = e => reject(e.target.result);
 
-            reader.readAsBinaryString(file);
+            reader.readAsArrayBuffer(file);
         }).then(content => {
             return this.request(url, {
                 method: "POST",

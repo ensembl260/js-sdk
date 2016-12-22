@@ -93,7 +93,7 @@ export default function auth(): Object {
 
                 return token;
             }).catch(() => {
-                this.logout();
+                this.auth.logout();
                 this.event.emit(EVENT_FAIL_AUTH, this);
             });
         },

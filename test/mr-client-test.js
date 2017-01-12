@@ -81,6 +81,7 @@ describe("MRClient", () => {
                 .then(token => {
                     expect(token).toBeAn(Token);
                     expect(token.accessToken).toExist();
+                    expect(token.expiredAt).toExist();
                     expect(token.isExpired()).toBe(false);
                     expect(mrClient.auth.isAuthenticated()).toBe(true);
                     done();
@@ -95,6 +96,7 @@ describe("MRClient", () => {
                 expect(token).toBeAn(Token);
                 expect(token.accessToken).toExist();
                 expect(token.refreshToken).toExist();
+                expect(token.expiredAt).toExist();
                 expect(token.isExpired()).toBe(false);
                 expect(mrClient.auth.isAuthenticated()).toBe(true);
                 done();
@@ -115,6 +117,7 @@ describe("MRClient", () => {
                 expect(mrClient.auth.getToken()).toBeAn(Token);
                 expect(mrClient.auth.getToken().accessToken).toBe("new_token");
                 expect(mrClient.auth.getToken().refreshToken).toBe("new_refresh_token");
+                expect(mrClient.auth.getToken().expiredAt).toExist();
                 expect(mrClient.auth.getToken().isExpired()).toBe(false);
                 expect(mrClient.auth.isAuthenticated()).toBe(true);
 

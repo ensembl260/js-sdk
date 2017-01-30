@@ -1,6 +1,5 @@
 global.fetch = require("node-fetch");
 global.Headers = require("node-fetch").Headers;
-global.FormData = require("form-data");
 
 global.client_id = "c4ee8504-80d2-11e6-8f1f-9be34f73e493_4g8j1az05u2o8gog4c8k0kksk800ws84ks0o48k88gosg4wg0k";
 global.client_secret = "4fd07cend9c084w0owk844wc4o4okwwoogg8s4k0ksocwos08k";

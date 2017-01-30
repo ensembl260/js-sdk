@@ -161,7 +161,7 @@ describe("MRClient", () => {
             clientSecret: clientSecret,
         });
 
-        it("should set a new token as an user", (done) => {
+        it("should be able to do a request after to be authenticated", (done) => {
             mrClient.auth.userAuthentication({
                 email: "test@ma-residence.fr",
                 password: "password"

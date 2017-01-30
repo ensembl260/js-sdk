@@ -107,7 +107,7 @@ export default class MRClient {
         });
     }
 
-    upload(url: string, file: Blob):Promise<any> {
+    upload(url: string, file: Blob, form?: Object):Promise<any> {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
 
@@ -118,9 +118,9 @@ export default class MRClient {
         }).then(content => {
             return this.request(url, {
                 method: "POST",
-                body: {
+                body: Object.assign({}, form || {}, {
                     file: btoa(content)
-                },
+                }),
             });
         });
     }

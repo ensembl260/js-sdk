@@ -114,7 +114,7 @@ export default class MRClient {
             reader.onload = e => resolve(e.target.result);
             reader.onerror = e => reject(e.target.result);
 
-            reader.readAsArrayBuffer(file);
+            reader.readAsBinaryString(file);
         }).then(content => {
             return this.request(url, {
                 method: "POST",

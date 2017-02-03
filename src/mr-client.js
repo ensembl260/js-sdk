@@ -1,6 +1,7 @@
 /* @flow */
 
 declare var fetch: any;
+declare var FileReader: any;
 
 import {
     API_URL,

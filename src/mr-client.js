@@ -70,9 +70,11 @@ export default class MRClient {
         const token = this._token;
 
         if (auth && token) {
-            if (token.isExpired() && token.refreshToken) {
+            if (token.isExpired()) {
                 if (this._refreshRequest === undefined || this._refreshRequest === null) {
-                    this._refreshRequest = this.auth.refreshAuthentication(token.refreshToken);
+                    this._refreshRequest = token.refreshToken ?
+                        this.auth.refreshAuthentication(token.refreshToken) :
+                        this.auth.applicationAuthentication();
                 }
 
                 return this._refreshRequest.then(() => {

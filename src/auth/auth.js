@@ -104,6 +104,7 @@ export default function auth(): Object {
 
         logout: () => {
             this._token = null;
+            this._refreshRequest = null;
         },
 
         setToken: (token: {

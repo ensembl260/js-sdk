@@ -114,7 +114,7 @@ export default class MRClient {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
 
-            reader.onload = e => resolve(e.target.result);
+            reader.onload = reader.onloadend = e => resolve(e.target.result);
             reader.onerror = e => reject(e.target.result);
 
             reader.readAsBinaryString(file);

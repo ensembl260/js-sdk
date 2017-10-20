@@ -112,13 +112,37 @@ export default class MRClient {
 
     upload(url: string, file: Blob, form?: Object):Promise<any> {
         return new Promise((resolve, reject) => {
-            const reader = new FileReader();
+            function readAsBinaryString(blob, callback) {
+                let reader = new FileReader();
 
-            reader.onload = reader.onloadend = e => resolve(e.target.result);
-            reader.onerror = e => reject(e.target.result);
+                let binStringCallback = function (e) {
+                    callback(e.target.result);
+                };
 
-            reader.readAsBinaryString(file);
-        }).then(content => {
+                let arrBufferCallback = function (e) {
+                    var binary = "";
+                    var bytes = new Uint8Array(e.target.result);
+                    var length = bytes.byteLength;
+                    for (var i = 0; i < length; i++) {
+                        binary += String.fromCharCode(bytes[i]);
+                    }
+                    callback(binary);
+                };
+
+                reader.onerror = reader.onabort = function () {
+                    callback(null)
+                };
+
+                if (typeof reader.readAsBinaryString != "undefined") {
+                    reader.onload = binStringCallback;
+                    reader.readAsBinaryString(blob);
+                } else {
+                    reader.onload = arrBufferCallback;
+                    reader.readAsArrayBuffer(blob);
+                }
+            }
+            readAsBinaryString(file, e => reject(e.target.result));
+         }).then(content => {
             return this.request(url, {
                 method: "POST",
                 body: Object.assign({}, form || {}, {

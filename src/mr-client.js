@@ -112,36 +112,22 @@ export default class MRClient {
 
     upload(url: string, file: Blob, form?: Object):Promise<any> {
         return new Promise((resolve, reject) => {
-            function readAsBinaryString(blob, callback) {
                 let reader = new FileReader();
-
-                let binStringCallback = function (e) {
-                    callback(e.target.result);
-                };
-
-                let arrBufferCallback = function (e) {
-                    var binary = "";
-                    var bytes = new Uint8Array(e.target.result);
-                    var length = bytes.byteLength;
-                    for (var i = 0; i < length; i++) {
-                        binary += String.fromCharCode(bytes[i]);
-                    }
-                    callback(binary);
-                };
-
-                reader.onerror = reader.onabort = function () {
-                    callback(null)
-                };
-
+                reader.onerror = reader.onabort = () => { callback(null); }
                 if (typeof reader.readAsBinaryString != "undefined") {
-                    reader.onload = binStringCallback;
-                    reader.readAsBinaryString(blob);
+                    reader.onload = (e) => {resolve(e.target.result)}
+                    reader.readAsBinaryString(file);
                 } else {
-                    reader.onload = arrBufferCallback;
-                    reader.readAsArrayBuffer(blob);
+                    reader.onload = (e) => {
+                        let binary = "";
+                        let bytes = new Uint8Array(e.target.result);
+                        for (let i = 0; i < bytes.byteLength; i++) {
+                            binary += String.fromCharCode(bytes[i]);
+                        }
+                        resolve(binary);
+                    }
+                    reader.readAsArrayBuffer(file);
                 }
-            }
-            readAsBinaryString(file, e => reject(e.target.result));
          }).then(content => {
             return this.request(url, {
                 method: "POST",

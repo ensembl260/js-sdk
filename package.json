@@ -7,6 +7,7 @@
     "build": "npm run build:umd && npm run build:examples",
     "build:umd": "webpack",
     "build:examples": "cp mr-client.min.js examples/mr-client.min.js",
+    "postinstall": "npm run build --verbose",
     "lint": "eslint src",
     "flow": "flow status",
     "test": "npm run lint && npm run flow && npm run test:node",

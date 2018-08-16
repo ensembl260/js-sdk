@@ -43,8 +43,8 @@ export default function auth(): Object {
                 });
             } else if (credentials.token && credentials.service) {
                 body = Object.assign({}, body, {
-                    username: credentials.token,
-                    password: credentials.service,
+                    token: credentials.token,
+                    type: credentials.service,
                     grant_type: OAUTH_GRANT_EXTERNAL
                 });
             } else {

@@ -21,10 +21,6 @@ const config = {
                 plugins: ["transform-class-properties", "transform-flow-strip-types", "transform-object-assign"],
                 presets: ['es2015']
             }
-        }, {
-            test: /\.js$/,
-            loader: "eslint-loader",
-            include: path.join(__dirname, 'src')
         }]
     },
     plugins: [

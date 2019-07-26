@@ -78,6 +78,8 @@ export default function auth(): Object {
                     return response.json();
                 }
 
+				this.auth.logout();
+				this.event.emit(EVENT_FAIL_AUTH, this);
                 throw Error("Authentication fail!");
             }).then(json => {
                 const expiredAt = new Date();
@@ -92,9 +94,6 @@ export default function auth(): Object {
                 this.event.emit(EVENT_POST_AUTH, this);
 
                 return token;
-            }).catch(() => {
-                this.auth.logout();
-                this.event.emit(EVENT_FAIL_AUTH, this);
             });
         },
 

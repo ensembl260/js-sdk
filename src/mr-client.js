@@ -1,5 +1,3 @@
-/* @flow */
-
 declare var fetch: any;
 declare var FileReader: any;
 

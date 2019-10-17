@@ -56,7 +56,8 @@ export default class MRClient {
             query?: Object,
             body?: Object,
             auth?: boolean,
-            json?: boolean
+            json?: boolean,
+            formdata?: boolean
         }
     ):Promise<any> {
         this.event.emit(EVENT_PRE_REQUEST, this);
@@ -65,6 +66,7 @@ export default class MRClient {
         let headers = new Headers();
         const auth = (requestOptions.auth === undefined) ? true : requestOptions.auth;
         const json = (requestOptions.json === undefined) ? true : requestOptions.json;
+        const formdata = (requestOptions.formdata === undefined) ? false : requestOptions.formdata;
         const token = this._token;
 
         if (auth && token) {
@@ -83,7 +85,7 @@ export default class MRClient {
             headers.append("Authorization", `Bearer ${token.accessToken}`);
         }
 
-        if (body) {
+        if (body && !formdata) {
             if (json) {
                 headers.append("Content-Type", "application/json");
 

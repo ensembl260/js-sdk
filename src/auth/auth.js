@@ -72,7 +72,8 @@ export default function auth(): Object {
                 method: "POST",
                 body: body,
                 auth: false,
-                json: false
+                json: false,
+				baseUrl: this._tokenUrl
             }).then(response => {
                 if (response.status === 200) {
                     return response.json();

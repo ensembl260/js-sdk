@@ -12,6 +12,7 @@ import { stringify as qsStringify } from "querystring";
 
 export default class MRClient {
     _apiUrl: string;
+	_tokenUrl: string;
 
     _clientId: string;
     _clientSecret: string;
@@ -25,6 +26,7 @@ export default class MRClient {
     constructor(
         options: {
             apiUrl: string,
+			tokenUrl: string,
             clientId: string,
             clientSecret: string,
             token?: {
@@ -35,6 +37,7 @@ export default class MRClient {
         }
     ) {
         this._apiUrl = options.apiUrl || API_URL;
+		this._tokenUrl = options.tokenUrl || this._apiUrl;
         this._clientId = options.clientId;
         this._clientSecret = options.clientSecret;
 
@@ -57,7 +60,8 @@ export default class MRClient {
             body?: Object,
             auth?: boolean,
             json?: boolean,
-            formdata?: boolean
+            formdata?: boolean,
+			baseUrl?: string
         }
     ):Promise<any> {
         this.event.emit(EVENT_PRE_REQUEST, this);
@@ -103,7 +107,7 @@ export default class MRClient {
             url = decodeURIComponent(`${url}?${qsStringify(query)}`);
         }
 
-        return fetch(`${this._apiUrl}${url}`, {
+        return fetch(`${requestOptions.baseUrl ? requestOptions.baseUrl : this._apiUrl}${url}`, {
             method,
             headers,
             body: (method !== "GET") && body ? body : undefined

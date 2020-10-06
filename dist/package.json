@@ -1,0 +1,20 @@
+{
+  "name": "@ma-residence/mr-js-sdk",
+  "version": "RELEASE_VERSION",
+  "description": "ma-residence.fr js SDK",
+  "main": "mr-client.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/ma-residence"
+  },
+  "repository": {
+    "type": "git",
+    "url": "shh://github.com/ma-residence/js-sdk.git",
+    "directory": "@ma-residence/mr-js-sdk"
+  },
+  "author": "ma-residence",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ma-residence/js-sdk/issues"
+  },
+  "homepage": "https://github.com/ma-residence/js-sdk#readme"
+}

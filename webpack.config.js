@@ -2,39 +2,52 @@
 
 const webpack = require("webpack");
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
+    mode: 'production',
     entry: __dirname + '/src/mr-client.js',
     output: {
-        path: __dirname,
-        filename: 'mr-client.min.js',
+        path: __dirname  + '/dist',
+        filename: 'mr-client.js',
         library: "MRClient",
         libraryTarget: "umd",
         umdNamedDefine: true
     },
     module: {
-        loaders: [{
+        rules: [{
             test: /\.js$/,
-            loader: 'babel-loader',
             include: path.join(__dirname, 'src'),
-            query: {
-                plugins: ["transform-class-properties", "transform-flow-strip-types", "transform-object-assign"],
-                presets: ['es2015']
-            }
+            use: [
+                {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"],
+                        plugins: [
+                            "@babel/plugin-proposal-class-properties",
+                            "@babel/plugin-transform-flow-strip-types",
+                            "@babel/plugin-transform-object-assign"
+                        ],
+                    },
+                }
+            ],
         }]
+    },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                test: /\.js(\?.*)?$/i,
+            })
+        ],
     },
     plugins: [
         new webpack.DefinePlugin({
             "process.browser": true
         }),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                drop_console: true
-            }
-        }),
-    ]
+    ],
+    resolve: {
+        modules: ['node_modules'],
+    }
 };
 
 module.exports = config;

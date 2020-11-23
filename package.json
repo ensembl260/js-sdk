@@ -3,19 +3,11 @@
   "description": "ma-residence.fr js SDK",
   "main": "lib/mr-client.js",
   "scripts": {
-    "build": "webpack",
+    "build": "BABEL_DISABLE_CACHE=1 webpack",
     "postinstall": "npm run build --verbose",
     "lint": "eslint src",
     "flow": "flow",
     "test": "mocha --compilers js:@babel/register --require test/setup --recursive"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/ma-residence"
-  },
-  "repository": {
-    "type": "git",
-    "url": "shh://github.com/ma-residence/js-sdk.git",
-    "directory": "@ma-residence/mr-js-sdk"
   },
   "author": "",
   "license": "UNLICENSED",
@@ -42,6 +34,7 @@
     "mocha": "^5.2.0",
     "node-fetch": "^1.6.3",
     "path": "^0.12.7",
+    "typescript": "^4.1.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"

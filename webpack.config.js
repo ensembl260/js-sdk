@@ -9,7 +9,7 @@ const config = {
     entry: __dirname + '/src/mr-client.js',
     output: {
         path: __dirname  + '/dist',
-        filename: 'mr-client.js',
+        filename: 'index.js',
         library: "MRClient",
         libraryTarget: "umd",
         umdNamedDefine: true

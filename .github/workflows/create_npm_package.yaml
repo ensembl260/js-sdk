@@ -27,10 +27,15 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Create index.d.ts
+        run: npx typescript ./dist/index.js --declaration --allowJs --emitDeclarationOnly --outDir ./dist
+
       - name: Set package version
         run: sed -i 's/RELEASE_VERSION/'"$RELEASE_VERSION"'/g' dist/package.json
 
       - name: Publish package
-        run: npm publish
+        run: |
+          cd dist
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

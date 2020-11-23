@@ -59,12 +59,12 @@ export default class MRClient {
             json?: boolean,
             formdata?: boolean,
             baseUrl?: string,
-            platform?: string,
+            platform?: string
         }
     ):Promise<any> {
         this.event.emit(EVENT_PRE_REQUEST, this);
 
-        let { method, query, body } = requestOptions;
+        let { method, query, body, platform } = requestOptions;
         let headers = new Headers();
         const auth = (requestOptions.auth === undefined) ? true : requestOptions.auth;
         const json = (requestOptions.json === undefined) ? true : requestOptions.json;
@@ -105,8 +105,8 @@ export default class MRClient {
             url = decodeURIComponent(`${url}?${qsStringify(query)}`);
         }
 
-        if (requestOptions.platform) {
-            headers.append("PLATFORM", requestOptions.platform);
+        if (platform) {
+            headers.append("PLATFORM", platform);
         }
 
         return fetch(`${requestOptions.baseUrl ? requestOptions.baseUrl : this._apiUrl}${url}`, {

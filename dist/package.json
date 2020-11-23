@@ -1,8 +1,8 @@
 {
   "name": "@ma-residence/mr-js-sdk",
-  "version": "RELEASE_VERSION",
+  "version": "1.0.5",
   "description": "ma-residence.fr js SDK",
-  "main": "mr-client.js",
+  "main": "index.js",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/ma-residence"
   },

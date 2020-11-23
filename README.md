@@ -97,6 +97,7 @@ client.request("/foo", {
     body: {
         foo: "foo"
     },
+    platform: "platform"
 }).then(function(response) {
     // Here you can check the response status, etc.
     // And we return the deserialize content

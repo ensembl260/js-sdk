@@ -106,7 +106,7 @@ export default class MRClient {
         }
 
         if (platform) {
-            headers.append("PLATFORM", platform);
+            headers.append("'X-APP-PLATFORM", platform);
         }
 
         return fetch(`${requestOptions.baseUrl ? requestOptions.baseUrl : this._apiUrl}${url}`, {

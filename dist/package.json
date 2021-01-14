@@ -1,6 +1,6 @@
 {
   "name": "@ma-residence/mr-js-sdk",
-  "version": "1.0.5",
+  "version": "RELEASE_VERSION",
   "description": "ma-residence.fr js SDK",
   "main": "index.js",
   "publishConfig": {

@@ -17,9 +17,9 @@ npm login --registry=https://npm.pkg.github.com --scope=@ma-residence
 
 - Install package
 ```
-npm install @ma-residence/mr-js-sdk@1.0.2 
+npm install @ma-residence/mr-js-sdk
 # or
-npm add @ma-residence/mr-js-sdk@1.0.2 
+yarn add @ma-residence/mr-js-sdk 
 ```
 
 # Usage

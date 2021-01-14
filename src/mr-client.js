@@ -1,10 +1,7 @@
 declare var fetch: any;
 declare var FileReader: any;
 
-import {
-    API_URL,
-    EVENT_PRE_REQUEST
-} from "./constants";
+import {API_URL, EVENT_PRE_REQUEST} from "./constants";
 import auth from "./auth/auth";
 import event from "./event";
 import Token from "./auth/token";
@@ -12,7 +9,7 @@ import { stringify as qsStringify } from "querystring";
 
 export default class MRClient {
     _apiUrl: string;
-	_tokenUrl: string;
+    _tokenUrl: string;
 
     _clientId: string;
     _clientSecret: string;
@@ -26,7 +23,7 @@ export default class MRClient {
     constructor(
         options: {
             apiUrl: string,
-			tokenUrl: string,
+            tokenUrl: string,
             clientId: string,
             clientSecret: string,
             token?: {
@@ -37,7 +34,7 @@ export default class MRClient {
         }
     ) {
         this._apiUrl = options.apiUrl || API_URL;
-		this._tokenUrl = options.tokenUrl || this._apiUrl;
+        this._tokenUrl = options.tokenUrl || this._apiUrl;
         this._clientId = options.clientId;
         this._clientSecret = options.clientSecret;
 
@@ -61,12 +58,13 @@ export default class MRClient {
             auth?: boolean,
             json?: boolean,
             formdata?: boolean,
-			baseUrl?: string
+            baseUrl?: string,
+            platform?: string
         }
     ):Promise<any> {
         this.event.emit(EVENT_PRE_REQUEST, this);
 
-        let { method, query, body } = requestOptions;
+        let { method, query, body, platform } = requestOptions;
         let headers = new Headers();
         const auth = (requestOptions.auth === undefined) ? true : requestOptions.auth;
         const json = (requestOptions.json === undefined) ? true : requestOptions.json;
@@ -105,6 +103,10 @@ export default class MRClient {
 
         if (query) {
             url = decodeURIComponent(`${url}?${qsStringify(query)}`);
+        }
+
+        if (platform) {
+            headers.append("'X-APP-PLATFORM", platform);
         }
 
         return fetch(`${requestOptions.baseUrl ? requestOptions.baseUrl : this._apiUrl}${url}`, {

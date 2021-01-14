@@ -1,4 +1,4 @@
 {
-  "plugins": ["transform-class-properties", "transform-flow-strip-types", "transform-object-assign"],
-  "presets": ["es2015"]
+  "plugins": ["@babel/plugin-proposal-class-properties", "@babel/plugin-transform-flow-strip-types", "@babel/plugin-transform-object-assign"],
+  "presets": ["@babel/preset-env"]
 }

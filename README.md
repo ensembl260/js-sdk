@@ -1,19 +1,25 @@
 # js-sdk
 
-[![Build Status](https://travis-ci.com/ma-residence/js-sdk.svg?token=txabW3XnmBRNYuhMQNLm&branch=master)](https://travis-ci.com/ma-residence/js-sdk)
-
 A SDK for ma-residence API in Javascript.
 
-# Installation
+## Installation
 
-Update your bower.json:
+- Edit or create the .npmrc file and add these lines
+```
+registry=https://registry.npmjs.org/
+@ma-residence:registry=https://npm.pkg.github.com/
+```
 
-```json
-{
-    "dependencies": {
-        "mr-js-sdk": "git@github.com:ma-residence/js-sdk.git"
-    }
-}
+- Login to github: *The username is your github username, the password this your personal access token and the email this your github account email*
+```
+npm login --registry=https://npm.pkg.github.com --scope=@ma-residence
+```
+
+- Install package
+```
+npm install @ma-residence/mr-js-sdk@1.0.2 
+# or
+npm add @ma-residence/mr-js-sdk@1.0.2 
 ```
 
 # Usage
@@ -91,6 +97,7 @@ client.request("/foo", {
     body: {
         foo: "foo"
     },
+    platform: "platform"
 }).then(function(response) {
     // Here you can check the response status, etc.
     // And we return the deserialize content

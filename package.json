@@ -12,9 +12,9 @@
   "author": "",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/ma-residence/js-sdk/issues"
+    "url": "https://github.com/ensembl260/js-sdk/issues"
   },
-  "homepage": "https://github.com/ma-residence/js-sdk#readme",
+  "homepage": "https://github.com/ensembl260/js-sdk#readme",
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",

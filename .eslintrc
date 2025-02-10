@@ -1,0 +1,18 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "parser": "@babel/eslint-parser",
+  "plugins": ["@babel"],
+  "rules": {
+    "semi": [2, "always"],
+    "no-multiple-empty-lines": [2, {"max": 1}],
+    "quotes": [2, "double", "avoid-escape"],
+    "keyword-spacing": 2,
+    "space-in-parens": [2, "never"]
+  }
+}

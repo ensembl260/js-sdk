@@ -1,46 +1,47 @@
 {
-  "name": "@ma-residence/mr-js-sdk",
-  "description": "ma-residence.fr js SDK",
-  "main": "lib/mr-client.js",
-  "scripts": {
-    "build": "BABEL_DISABLE_CACHE=1 webpack",
-    "postinstall": "npm run build --verbose",
-    "lint": "eslint src",
-    "flow": "flow",
-    "test": "mocha --compilers js:@babel/register --require test/setup --recursive"
-  },
-  "author": "",
-  "license": "UNLICENSED",
-  "bugs": {
-    "url": "https://github.com/ma-residence/js-sdk/issues"
-  },
-  "homepage": "https://github.com/ma-residence/js-sdk#readme",
-  "devDependencies": {
-    "@babel/cli": "^7.11.6",
-    "@babel/core": "^7.11.6",
-    "@babel/eslint-parser": "^7.11.5",
-    "@babel/eslint-plugin": "^7.11.5",
-    "@babel/node": "^7.10.5",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-transform-flow-strip-types": "^7.10.4",
-    "@babel/plugin-transform-object-assign": "^7.10.4",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/register": "^7.11.5",
-    "babel-loader": "^8.1.0",
-    "eslint": "^5.16.0",
-    "eslint-loader": "^1.5.0",
-    "expect": "^1.20.2",
-    "flow-bin": "^0.135.0",
-    "mocha": "^5.2.0",
-    "node-fetch": "^2.6.1",
-    "path": "^0.12.7",
-    "typescript": "^4.1.2",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
-  },
-  "dependencies": {
-    "nock": "^9.0.2",
-    "querystring": "^0.2.0"
-  }
+    "name": "@ensembl260/mr-js-sdk",
+    "description": "ensembl260.fr js SDK",
+    "version": "1.1.4",
+    "main": "lib/mr-client.js",
+    "scripts": {
+        "build": "BABEL_DISABLE_CACHE=1 webpack",
+        "postinstall": "npm run build --verbose",
+        "lint": "eslint src",
+        "flow": "flow",
+        "test": "mocha --compilers js:@babel/register --require test/setup --recursive"
+    },
+    "author": "",
+    "license": "UNLICENSED",
+    "bugs": {
+        "url": "https://github.com/ensembl260/js-sdk/issues"
+    },
+    "homepage": "https://github.com/ensembl260/js-sdk#readme",
+    "devDependencies": {
+        "@babel/cli": "^7.11.6",
+        "@babel/core": "^7.11.6",
+        "@babel/eslint-parser": "^7.11.5",
+        "@babel/eslint-plugin": "^7.11.5",
+        "@babel/node": "^7.10.5",
+        "@babel/plugin-proposal-class-properties": "^7.10.4",
+        "@babel/plugin-transform-flow-strip-types": "^7.10.4",
+        "@babel/plugin-transform-object-assign": "^7.10.4",
+        "@babel/preset-env": "^7.11.5",
+        "@babel/register": "^7.11.5",
+        "babel-loader": "^8.1.0",
+        "eslint": "^5.16.0",
+        "eslint-loader": "^1.5.0",
+        "expect": "^1.20.2",
+        "flow-bin": "^0.135.0",
+        "mocha": "^5.2.0",
+        "node-fetch": "^2.6.1",
+        "path": "^0.12.7",
+        "typescript": "^4.1.2",
+        "uglifyjs-webpack-plugin": "^2.2.0",
+        "webpack": "^4.44.2",
+        "webpack-cli": "^3.3.12"
+    },
+    "dependencies": {
+        "nock": "^9.0.2",
+        "querystring": "^0.2.0"
+    }
 }

@@ -20,7 +20,7 @@ describe("MRClient", () => {
         });
 
         it("should set an apiUrl on the MRClient instance", () => {
-            expect(mrClient._apiUrl).toBe("http://api.ma-residence.fr");
+            expect(mrClient._apiUrl).toBe("http://api.ensembl260.fr");
         });
 
         it("should set the clientId argument on the MRClient instance", () => {
@@ -90,7 +90,7 @@ describe("MRClient", () => {
 
         it("should set a new token as an user", (done) => {
             mrClient.auth.userAuthentication({
-                email: "test@ma-residence.fr",
+                email: "test@ensembl260.fr",
                 password: "password"
             }).then(token => {
                 expect(token).toBeAn(Token);
@@ -163,7 +163,7 @@ describe("MRClient", () => {
 
         it("should be able to do a request after to be authenticated", (done) => {
             mrClient.auth.userAuthentication({
-                email: "test@ma-residence.fr",
+                email: "test@ensembl260.fr",
                 password: "password"
             }).then(() => {
                 expect(mrClient.auth.isAuthenticated()).toBe(true);

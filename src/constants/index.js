@@ -1,4 +1,4 @@
-export const API_URL = "http://api.ma-residence.fr";
+export const API_URL = "http://api.ensembl260.fr";
 export const OAUTH_TOKEN_URL = "/oauth/v2/token";
 
 export const OAUTH_GRANT_CLIENT_CREDENTIALS = "client_credentials";

@@ -7,7 +7,7 @@ global.client_secret = "4fd07cend9c084w0owk844wc4o4okwwoogg8s4k0ksocwos08k";
 const nock = require("nock");
 
 nock.disableNetConnect();
-const api = nock("http://api.ma-residence.fr");
+const api = nock("http://api.ensembl260.fr");
 
 api.persist()
     .post("/oauth/v2/token", {
@@ -28,7 +28,7 @@ api.persist()
         client_id: global.client_id,
         client_secret: global.client_secret,
         grant_type: "password",
-        username: "test@ma-residence.fr",
+        username: "test@ensembl260.fr",
         password: "password"
     })
     .reply(200, {

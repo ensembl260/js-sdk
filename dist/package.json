@@ -1,20 +1,20 @@
 {
-  "name": "@ma-residence/mr-js-sdk",
+  "name": "@ensembl260/mr-js-sdk",
   "version": "RELEASE_VERSION",
-  "description": "ma-residence.fr js SDK",
+  "description": "ensembl260.fr js SDK",
   "main": "index.js",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/ma-residence"
+    "registry": "https://npm.pkg.github.com/ensembl260"
   },
   "repository": {
     "type": "git",
-    "url": "shh://github.com/ma-residence/js-sdk.git",
-    "directory": "@ma-residence/mr-js-sdk"
+    "url": "shh://github.com/ensembl260/js-sdk.git",
+    "directory": "@ensembl260/mr-js-sdk"
   },
-  "author": "ma-residence",
+  "author": "ensembl260",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/ma-residence/js-sdk/issues"
+    "url": "https://github.com/ensembl260/js-sdk/issues"
   },
-  "homepage": "https://github.com/ma-residence/js-sdk#readme"
+  "homepage": "https://github.com/ensembl260/js-sdk#readme"
 }

@@ -1,25 +1,25 @@
 # js-sdk
 
-A SDK for ma-residence API in Javascript.
+A SDK for ensembl260 API in Javascript.
 
 ## Installation
 
 - Edit or create the .npmrc file and add these lines
 ```
 registry=https://registry.npmjs.org/
-@ma-residence:registry=https://npm.pkg.github.com/
+@ensembl260:registry=https://npm.pkg.github.com/
 ```
 
 - Login to github: *The username is your github username, the password this your personal access token and the email this your github account email*
 ```
-npm login --registry=https://npm.pkg.github.com --scope=@ma-residence
+npm login --registry=https://npm.pkg.github.com --scope=@ensembl260
 ```
 
 - Install package
 ```
-npm install @ma-residence/mr-js-sdk
+npm install @ensembl260/mr-js-sdk
 # or
-yarn add @ma-residence/mr-js-sdk 
+yarn add @ensembl260/mr-js-sdk 
 ```
 
 # Usage
@@ -109,7 +109,7 @@ client.request("/foo", {
 });
 ```
 
-Check [API documentation](http://doc.ma-residence.fr) to see all available routes.
+Check [API documentation](http://doc.ensembl260.fr) to see all available routes.
 
 ## Event listener
 

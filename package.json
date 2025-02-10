@@ -1,6 +1,6 @@
 {
-  "name": "@ma-residence/mr-js-sdk",
-  "description": "ma-residence.fr js SDK",
+  "name": "@ensembl260/mr-js-sdk",
+  "description": "Ensembl260 js SDK",
   "main": "lib/mr-client.js",
   "scripts": {
     "build": "BABEL_DISABLE_CACHE=1 webpack",
